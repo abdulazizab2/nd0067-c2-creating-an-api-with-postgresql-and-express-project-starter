@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 
-const app: express.Application = express();
+const app = express();
 const address = 'localhost';
 const port = 8000;
 
