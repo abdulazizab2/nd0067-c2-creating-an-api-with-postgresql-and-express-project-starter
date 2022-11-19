@@ -60,13 +60,13 @@ export class UserStore {
   async delete(username: string): Promise<User> {
     try {
       // @ts-ignore
-      const conn = await client.connect()
-      const sql = 'DELETE FROM users WHERE username=($1)'
-      const result = await conn.query(sql, [username])
-      conn.release()
-      return result.rows[0]
+      const conn = await client.connect();
+      const sql = 'DELETE FROM users WHERE username=($1)';
+      const result = await conn.query(sql, [username]);
+      conn.release();
+      return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not delete user: ${username}. Error: ${err}`)
+      throw new Error(`Could not delete user: ${username}. Error: ${err}`);
     }
   }
 }
