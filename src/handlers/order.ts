@@ -1,0 +1,93 @@
+import express from 'express';
+import { Order, OrderStore } from '../models/order';
+import { Item } from '../../types/item';
+
+// model
+
+const store = new OrderStore();
+
+// handlers
+
+const index = async (_req: express.Request, res: express.Response) => {
+  const orders = await store.index();
+  res.json(orders);
+};
+
+const show = async (req: express.Request, res: express.Response) => {
+  const id = req.body.id;
+  if (id == undefined) {
+    res.status(400);
+    res.send('Error 400: Query must contain id field');
+  }
+  const order = await store.show(id);
+  res.json(order);
+};
+
+const create = async (req: express.Request, res: express.Response) => {
+  const order: Order = {
+    username: req.body.username,
+  };
+  try {
+    const newOrder = await store.create(order);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+const destory = async (req: express.Request, res: express.Response) => {
+  const id = req.body.id;
+  if (id == undefined) {
+    res.status(400);
+    res.send('Error 400: Query must contain id field');
+  }
+  try {
+    const deletedOrder = await store.delete(id);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+const addProduct = async (req: express.Request, res: express.Response) => {
+  const item: Item = {
+    quantity: req.body.quantity,
+    orderId: req.body.orderId,
+    productId: req.body.productId,
+  };
+  try {
+    const addedProduct = await store.addProduct(item);
+    res.json(addedProduct);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+const completeOrder = async (req: express.Request, res: express.Response) => {
+  const id = req.body.id;
+  if (id == undefined) {
+    res.status(400);
+    res.send('Error 400: Query must contain id field');
+  }
+  try {
+    const completedOrder = await store.completeOrder(id);
+    res.json(completedOrder);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+// routes
+
+const orderRoutes = (app: express.Application) => {
+  app.get('/orders', index);
+  app.get('/orders/:id', show);
+  app.post('/orders', create);
+  app.delete('/orders/:id', destory);
+  app.post('orders/:id/products', addProduct);
+  app.put('/orders/:id', completeOrder);
+};
+
+export default orderRoutes
