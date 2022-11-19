@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRoutes from './handlers/user';
+import productRoutes from './handlers/product';
 
 const app = express();
 const address = 'localhost';
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 
 // routes TODO
 userRoutes(app);
-// productRoutes(app);
+productRoutes(app);
 // orderRoutes(app);
 //
 
