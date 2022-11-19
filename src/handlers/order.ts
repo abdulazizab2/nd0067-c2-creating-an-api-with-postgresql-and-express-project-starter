@@ -29,6 +29,7 @@ const create = async (req: express.Request, res: express.Response) => {
   };
   try {
     const newOrder = await store.create(order);
+    res.json(newOrder)
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -43,6 +44,7 @@ const destory = async (req: express.Request, res: express.Response) => {
   }
   try {
     const deletedOrder = await store.delete(id);
+    res.json(deletedOrder)
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -71,8 +73,7 @@ const completeOrder = async (req: express.Request, res: express.Response) => {
     res.send('Error 400: Query must contain id field');
   }
   try {
-    const completedOrder = await store.completeOrder(id);
-    res.json(completedOrder);
+    await store.completeOrder(id);
   } catch (err) {
     res.status(400);
     res.json(err);
