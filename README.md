@@ -45,6 +45,7 @@ TOKEN_SECRET=${JWT_TOKEN_SECRET}
   }
 ```
 ```${POSTGRES_USER}``` and ```${POSTGRES_PASSWORD}``` are the same as in 4.1
+## Running The Server
 ## Steps to Completion
 
 ### 1. Plan to Meet Requirements
