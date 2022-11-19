@@ -83,8 +83,8 @@ export class OrderStore {
       // @ts-ignore
       const conn = await client.connect();
       const status = 'complete';
-      const sql = 'UPDATE orders SET status=($1) WHERE id=$(2)';
-      const result = await conn.query(sql, [status, id]);
+      const sql = 'UPDATE orders SET status=($1) WHERE id=($2)';
+      await conn.query(sql, [status, id]);
       conn.release();
     } catch (err) {
       throw new Error(`Could not complete order ${id}. Error ${err}`);

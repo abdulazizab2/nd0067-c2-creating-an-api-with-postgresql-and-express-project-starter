@@ -73,7 +73,8 @@ const completeOrder = async (req: express.Request, res: express.Response) => {
     res.send('Error 400: Query must contain id field');
   }
   try {
-    await store.completeOrder(id);
+    const completedOrder = await store.completeOrder(id);
+    res.json(completedOrder)
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -87,7 +88,7 @@ const orderRoutes = (app: express.Application) => {
   app.get('/orders/:id', show);
   app.post('/orders', create);
   app.delete('/orders/:id', destory);
-  app.post('orders/:id/products', addProduct);
+  app.post('/orders/:id/products', addProduct);
   app.put('/orders/:id', completeOrder);
 };
 
