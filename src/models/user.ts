@@ -57,6 +57,26 @@ export class UserStore {
       throw new Error(`Could not create user: ${user.username}. Error: ${err}`);
     }
   }
+  async login(user: User): Promise<User | null> {
+    // @ts-ignore
+    const conn = await client.connect();
+    const sql =
+      'SELECT * FROM users WHERE username=($1)';
+    const result = await conn.query(sql, [user.username]);
+    if (result.rows.length) {
+      const userHashed: User = {
+      username:  result.rows[0].username,
+      password: result.rows[0].password_digest
+      }
+      if (
+        bcrypt.compareSync(user.password + pepper, userHashed.password)
+      ) {
+        return userHashed;
+      }
+    }
+
+    return null;
+  }
   async delete(username: string): Promise<User> {
     try {
       // @ts-ignore

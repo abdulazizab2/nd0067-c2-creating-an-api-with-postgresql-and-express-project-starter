@@ -1,5 +1,11 @@
 import express from 'express';
 import { User, UserStore } from '../models/user';
+import jwt from 'jsonwebtoken';
+import verifyAuthToken from '../middlewares/verifyAuthToken'
+import dotenv from 'dotenv';
+dotenv.config();
+
+const secretToken = process.env.TOKEN_SECRET as unknown as string;
 
 // model
 
@@ -22,8 +28,7 @@ const show = async (req: express.Request, res: express.Response) => {
     const user = await store.show(username);
     res.json(user);
   } catch (err) {
-    res.status(400);
-    res.json(err);
+    res.status(400).json(err);
   }
 };
 
@@ -32,16 +37,27 @@ const create = async (req: express.Request, res: express.Response) => {
     username: req.body.username,
     password: req.body.password,
   };
-  if (user.username == undefined || user.password == undefined) {
-    res.status(400);
-    res.send('Error 400: Query must contain username and password fields');
-  }
+
   try {
     const newUser = await store.create(user);
-    res.json(newUser);
+    var token = jwt.sign({ user: newUser }, secretToken);
+    res.json(token);
   } catch (err) {
-    res.status(400);
-    res.json(err);
+    res.status(400).json('Error 400: User Exists');
+  }
+};
+
+const login = async (req: express.Request, res: express.Response) => {
+  const user: User = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  try {
+    const loggedIn = await store.login(user);
+    var token = jwt.sign({ user: loggedIn }, secretToken);
+    res.json(token);
+  } catch (err) {
+    res.status(400).json({ err });
   }
 };
 
@@ -66,6 +82,7 @@ const userRoutes = (app: express.Application) => {
   app.get('/users', index);
   app.get('/users/:username', show);
   app.post('/users', create);
+  app.post('/users/login', verifyAuthToken, login)
   app.delete('/users/:username', destroy);
 };
 
