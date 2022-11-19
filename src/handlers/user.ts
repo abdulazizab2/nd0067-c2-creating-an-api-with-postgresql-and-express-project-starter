@@ -15,8 +15,8 @@ const index = async (_req: express.Request, res: express.Response) => {
 const show = async (req: express.Request, res: express.Response) => {
   const username = req.body.username;
   if (username == undefined) {
-    res.status(400)
-    res.send("Error 400: Query must contain username field")
+    res.status(400);
+    res.send('Error 400: Query must contain username field');
   }
   try {
     const user = await store.show(username);
@@ -32,6 +32,10 @@ const create = async (req: express.Request, res: express.Response) => {
     username: req.body.username,
     password: req.body.password,
   };
+  if (user.username == undefined || user.password == undefined) {
+    res.status(400);
+    res.send('Error 400: Query must contain username and password fields');
+  }
   try {
     const newUser = await store.create(user);
     res.json(newUser);
@@ -56,9 +60,9 @@ const destroy = async (req: express.Request, res: express.Response) => {
 
 const userRoutes = (app: express.Application) => {
   app.get('/users', index);
-  app.get('/users/:id', show);
+  app.get('/users/:username', show);
   app.post('/users', create);
-  app.delete('/users/:id', destroy);
+  app.delete('/users/:username', destroy);
 };
 
 export default userRoutes;
