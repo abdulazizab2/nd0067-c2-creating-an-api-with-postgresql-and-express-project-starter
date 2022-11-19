@@ -47,6 +47,10 @@ const create = async (req: express.Request, res: express.Response) => {
 
 const destroy = async (req: express.Request, res: express.Response) => {
   const username = req.body.username;
+  if (username == undefined) {
+    res.status(400);
+    res.send('Error 400: Query must contain username field');
+  }
   try {
     const deletedUser = await store.delete(username);
     res.json(deletedUser);
