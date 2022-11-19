@@ -61,7 +61,7 @@ export class UserStore {
     try {
       // @ts-ignore
       const conn = await client.connect();
-      const sql = 'DELETE FROM users WHERE username=($1)';
+      const sql = 'DELETE FROM users WHERE username=($1) RETURNING *';
       const result = await conn.query(sql, [username]);
       conn.release();
       return result.rows[0];
