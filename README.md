@@ -3,16 +3,48 @@
 ## Getting Started
 
 This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+## Installation and Setup guide
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
-
+1- Clone the repo
+2- Change directory to the cloned repo
+3- Run ```npm install```
+4- You have to create two files to run the server and connect to database:
+4.1- Create a ```.env``` file in the project root with the following environment variables
+```bash
+POSTGRES_TEST_DB=postgres_test
+POSTGRES_HOST=127.0.0.1
+POSTGRES_USER=${POSTGRES_USERNAME}
+POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+POSTGRES_DB=postgres_dev
+ENV=dev
+BCRYPT_PASSWORD=${BCRYPT_PASSWORD}
+SALT_ROUNDS=10
+TOKEN_SECRET=${JWT_TOKEN_SECRET}
+```
+```${POSTGRES_USERNAME}```: A username that will be used in connecting/migrating to the database
+```${POSTGRES_PASSWORD```: A password for postgres
+```${BCRYPT_PASSWORD}```: A password that is unqiue for the database to hash and encrypt a user's password
+```${JWT_TOKEN_SECRET}```: Token secret unique for the routers in the API to verify and authenticate requests
+4.2- Createa a ```database.json``` file in the project root with the following variables:
+```bash
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "postgres_dev",
+      "user": ${POSTGRES_USER},
+      "password": ${POSTGRES_PASSWORD}
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "postgres_test",
+      "user": ${POSTGRES_USER},
+      "password": ${POSTGRES_PASSWORD}
+    }
+  }
+```
+```${POSTGRES_USER}``` and ```${POSTGRES_PASSWORD}``` are the same as in 4.1
 ## Steps to Completion
 
 ### 1. Plan to Meet Requirements
