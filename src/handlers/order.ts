@@ -29,7 +29,7 @@ const create = async (req: express.Request, res: express.Response) => {
   };
   try {
     const newOrder = await store.create(order);
-    res.json(newOrder)
+    res.json(newOrder);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -44,7 +44,7 @@ const destory = async (req: express.Request, res: express.Response) => {
   }
   try {
     const deletedOrder = await store.delete(id);
-    res.json(deletedOrder)
+    res.json(deletedOrder);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -74,7 +74,7 @@ const completeOrder = async (req: express.Request, res: express.Response) => {
   }
   try {
     const completedOrder = await store.completeOrder(id);
-    res.json(completedOrder)
+    res.json(completedOrder);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -92,4 +92,4 @@ const orderRoutes = (app: express.Application) => {
   app.put('/orders/:id', completeOrder);
 };
 
-export default orderRoutes
+export default orderRoutes;

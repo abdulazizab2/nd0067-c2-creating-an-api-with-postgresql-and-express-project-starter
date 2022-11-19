@@ -1,7 +1,7 @@
 import express from 'express';
 import { User, UserStore } from '../models/user';
 import jwt from 'jsonwebtoken';
-import verifyAuthToken from '../middlewares/verifyAuthToken'
+import verifyAuthToken from '../middlewares/verifyAuthToken';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -82,7 +82,7 @@ const userRoutes = (app: express.Application) => {
   app.get('/users', index);
   app.get('/users/:username', show);
   app.post('/users', create);
-  app.post('/users/login', verifyAuthToken, login)
+  app.post('/users/login', verifyAuthToken, login);
   app.delete('/users/:username', destroy);
 };
 

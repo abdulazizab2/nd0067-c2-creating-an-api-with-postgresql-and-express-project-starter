@@ -20,4 +20,4 @@ const verifyAuthToken = (
   }
 };
 
-export default verifyAuthToken
+export default verifyAuthToken;
