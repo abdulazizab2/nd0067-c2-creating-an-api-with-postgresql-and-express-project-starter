@@ -1,6 +1,7 @@
 import express from 'express';
 import { Order, OrderStore } from '../models/order';
 import { Item } from '../../types/item';
+import verifyAuthToken from '../middlewares/verifyAuthToken';
 
 // model
 
@@ -84,12 +85,12 @@ const completeOrder = async (req: express.Request, res: express.Response) => {
 // routes
 
 const orderRoutes = (app: express.Application) => {
-  app.get('/orders', index);
-  app.get('/orders/:id', show);
-  app.post('/orders', create);
-  app.delete('/orders/:id', destory);
+  app.get('/orders', verifyAuthToken, index);
+  app.get('/orders/:id', verifyAuthToken, show);
+  app.post('/orders', verifyAuthToken, create);
+  app.delete('/orders/:id', verifyAuthToken, destory);
   app.post('/orders/:id/products', addProduct);
-  app.put('/orders/:id', completeOrder);
+  app.put('/orders/:id', verifyAuthToken, completeOrder);
 };
 
 export default orderRoutes;

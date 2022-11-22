@@ -79,11 +79,11 @@ const destroy = async (req: express.Request, res: express.Response) => {
 // routes
 
 const userRoutes = (app: express.Application) => {
-  app.get('/users', index);
-  app.get('/users/:username', show);
+  app.get('/users', verifyAuthToken, index);
+  app.get('/users/:username', verifyAuthToken, show);
   app.post('/users', create);
   app.post('/users/login', verifyAuthToken, login);
-  app.delete('/users/:username', destroy);
+  app.delete('/users/:username', verifyAuthToken, destroy);
 };
 
 export default userRoutes;

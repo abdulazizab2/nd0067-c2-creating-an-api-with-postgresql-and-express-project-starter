@@ -1,5 +1,6 @@
 import express from 'express';
 import { Product, ProductStore } from '../models/product';
+import verifyAuthToken from '../middlewares/verifyAuthToken';
 
 // model
 
@@ -60,8 +61,8 @@ const destory = async (req: express.Request, res: express.Response) => {
 const productRoutes = (app: express.Application) => {
   app.get('/products', index);
   app.get('/products/:id', show);
-  app.post('/products', create);
-  app.delete('/products/:id', destory);
+  app.post('/products', verifyAuthToken, create);
+  app.delete('/products/:id', verifyAuthToken, destory);
 };
 
 export default productRoutes;
