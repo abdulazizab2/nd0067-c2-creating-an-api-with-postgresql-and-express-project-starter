@@ -1,6 +1,6 @@
-import { OrderStore } from '../../models/order';
+import { ProductStore } from '../models/product';
 
-const store = new OrderStore();
+const store = new ProductStore();
 
 describe('Order Model', () => {
   it('should have an index method', () => {
@@ -17,11 +17,5 @@ describe('Order Model', () => {
 
   it('should have a delete method', () => {
     expect(store.delete).toBeDefined();
-  });
-  it('should have an addProduct method', () => {
-    expect(store.addProduct).toBeDefined();
-  });
-  it('should have a completeOrder method', () => {
-    expect(store.completeOrder).toBeDefined();
   });
 });
