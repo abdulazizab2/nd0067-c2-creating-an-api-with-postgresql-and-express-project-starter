@@ -47,7 +47,7 @@ TOKEN_SECRET=${JWT_TOKEN_SECRET}
 ```${POSTGRES_USER}``` and ```${POSTGRES_PASSWORD}``` are the same as in 4.1
 ## Running The Application/Server
 After installation, you can the server using of two commands:
-- ```npm run build && ./dist/server.js```
+- ```npm run build && node ./dist/server.js```
 or
 ```npm run start```
 The server start at ```localhost:8000```
