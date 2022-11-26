@@ -41,28 +41,12 @@ const create = async (req: express.Request, res: express.Response) => {
   }
 };
 
-const destory = async (req: express.Request, res: express.Response) => {
-  const id = req.body.id;
-  if (id == undefined) {
-    res.status(400);
-    res.send('Error 400: Query must contain id field');
-  }
-  try {
-    const deletedProduct = await store.delete(id);
-    res.json(deletedProduct);
-  } catch (err) {
-    res.status(400);
-    res.json(err);
-  }
-};
-
 // routes
 
 const productRoutes = (app: express.Application) => {
   app.get('/products', index);
   app.get('/products/:id', show);
   app.post('/products', verifyAuthToken, create);
-  app.delete('/products/:id', verifyAuthToken, destory);
 };
 
 export default productRoutes;

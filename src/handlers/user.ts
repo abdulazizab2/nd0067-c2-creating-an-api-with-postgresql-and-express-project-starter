@@ -61,21 +61,6 @@ const login = async (req: express.Request, res: express.Response) => {
   }
 };
 
-const destroy = async (req: express.Request, res: express.Response) => {
-  const username = req.body.username;
-  if (username == undefined) {
-    res.status(400);
-    res.send('Error 400: Query must contain username field');
-  }
-  try {
-    const deletedUser = await store.delete(username);
-    res.json(deletedUser);
-  } catch (err) {
-    res.status(400);
-    res.json(err);
-  }
-};
-
 // routes
 
 const userRoutes = (app: express.Application) => {
@@ -83,7 +68,6 @@ const userRoutes = (app: express.Application) => {
   app.get('/users/:username', verifyAuthToken, show);
   app.post('/users', create);
   app.post('/users/login', verifyAuthToken, login);
-  app.delete('/users/:username', verifyAuthToken, destroy);
 };
 
 export default userRoutes;

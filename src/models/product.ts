@@ -45,16 +45,4 @@ export class ProductStore {
       throw new Error(`Could not create a new product. Error ${err}`);
     }
   }
-  async delete(id: string): Promise<Product> {
-    try {
-      // @ts-ignore
-      const conn = await client.connect();
-      const sql = 'DELETE FROM products WHERE id=($1) RETURNING *';
-      const result = await conn.query(sql, [id]);
-      conn.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(`Could not delete product ${id}. Error ${err}`);
-    }
-  }
 }
