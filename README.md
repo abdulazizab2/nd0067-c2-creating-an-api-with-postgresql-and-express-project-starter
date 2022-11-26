@@ -45,6 +45,11 @@ TOKEN_SECRET=${JWT_TOKEN_SECRET}
   }
 ```
 ```${POSTGRES_USER}``` and ```${POSTGRES_PASSWORD}``` are the same as in 4.1
+## Running The Database
+To connect to the database simply run
+```docker compose up```
+IP Address: localhost
+Port: 5432
 ## Running The Application/Server
 After installation, you can the server using of two commands:
 - ```npm run build && node ./dist/server.js```

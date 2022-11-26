@@ -9,8 +9,13 @@ const store = new ProductStore();
 // handlers
 
 const index = async (_req: express.Request, res: express.Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const show = async (req: express.Request, res: express.Response) => {
@@ -19,8 +24,13 @@ const show = async (req: express.Request, res: express.Response) => {
     res.status(400);
     res.send('Error 400: Query must contain id field');
   }
-  const product = await store.show(id);
-  res.json(product);
+  try {
+    const product = await store.show(id);
+    res.json(product);
+  } catch (err) {
+    res.status(400);
+    res.json(400);
+  }
 };
 
 const create = async (req: express.Request, res: express.Response) => {

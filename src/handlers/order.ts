@@ -10,8 +10,13 @@ const store = new OrderStore();
 // handlers
 
 const index = async (_req: express.Request, res: express.Response) => {
-  const orders = await store.index();
-  res.json(orders);
+  try {
+    const orders = await store.index();
+    res.json(orders);
+  } catch (err) {
+    res.status(400);
+    res.json(400);
+  }
 };
 
 const show = async (req: express.Request, res: express.Response) => {
@@ -20,8 +25,13 @@ const show = async (req: express.Request, res: express.Response) => {
     res.status(400);
     res.send('Error 400: Query must contain id field');
   }
-  const order = await store.show(id);
-  res.json(order);
+  try {
+    const order = await store.show(id);
+    res.json(order);
+  } catch (err) {
+    res.status(400);
+    res.json(400);
+  }
 };
 
 const create = async (req: express.Request, res: express.Response) => {
@@ -89,7 +99,7 @@ const orderRoutes = (app: express.Application) => {
   app.get('/orders/:id', verifyAuthToken, show);
   app.post('/orders', verifyAuthToken, create);
   app.delete('/orders/:id', verifyAuthToken, destory);
-  app.post('/orders/:id/products', addProduct);
+  app.post('/orders/:id/products', verifyAuthToken, addProduct);
   app.put('/orders/:id', verifyAuthToken, completeOrder);
 };
 
